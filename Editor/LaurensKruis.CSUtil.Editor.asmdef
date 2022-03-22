@@ -1,0 +1,16 @@
+{
+    "name": "LaurensKruis.CSUtil.Editor",
+    "rootNamespace": "LaurensKruis.CSUtil.Editor",
+    "references": [
+        "GUID:1dfe0aaa7217b0842a63f89cd15515f9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

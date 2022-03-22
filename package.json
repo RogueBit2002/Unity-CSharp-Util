@@ -1,0 +1,10 @@
+{
+	"name": "me.laurens.csutil",
+	"version": "1.0.0",
+	"displayName": "CS Utility",
+	"author": {
+	  "name": "Laurens Kruis",
+	  "email": "laurens@kruis.com",
+	  "url": "http://www.laurens.me"
+	}
+  }
