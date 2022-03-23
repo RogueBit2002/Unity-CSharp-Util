@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LaurensKruis.CSUtil
+namespace LaurensKruis.CSUtil.Extensions
 {
     public static class JointDriveExt
     {
