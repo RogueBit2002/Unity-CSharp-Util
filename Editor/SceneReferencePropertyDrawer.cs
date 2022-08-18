@@ -23,7 +23,7 @@ namespace LaurensKruis.CSharpUtil.Editor
 
             if (!IsIncludedInBuild(assetProperty.objectReferenceValue))
             {
-                GUIContent icon = EditorGUIUtility.IconContent("d_console.warnicon@2x", "|This scene is not included in the final build.");
+                GUIContent icon = EditorGUIUtility.IconContent("Warning@2X", "|This scene is not included in the final build.");
 
                 Rect rect = new Rect(
                     position.x + position.width - EditorGUIUtility.singleLineHeight,
@@ -31,7 +31,12 @@ namespace LaurensKruis.CSharpUtil.Editor
                     EditorGUIUtility.singleLineHeight,
                     EditorGUIUtility.singleLineHeight);
 
-                EditorGUI.LabelField(rect,icon);
+                //Having an EditorGUI.indentLevel that's not zero messes with the icon transform???
+                int indent = EditorGUI.indentLevel;
+
+                EditorGUI.indentLevel = 0;
+                EditorGUI.LabelField(rect,icon, GUIStyle.none);
+                EditorGUI.indentLevel = indent;
 
                 position.width -= widthPadding;
             }
