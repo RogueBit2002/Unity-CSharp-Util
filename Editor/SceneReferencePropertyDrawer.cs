@@ -9,31 +9,31 @@ namespace LaurensKruis.CSharpUtil.Editor
     [CustomPropertyDrawer(typeof(SceneReference))]
     public class SceneReferencePropertyDrawer : PropertyDrawer
     {
+        private const float widthPadding = 24f;
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             SerializedProperty isDirtyProperty = property.FindPropertyRelative("isDirty");
             SerializedProperty assetProperty = property.FindPropertyRelative("asset");
 
             position.height = EditorGUIUtility.singleLineHeight;
+
             //Trick to mark property as dirty, and make it saveable
             if (isDirtyProperty.boolValue)
                 isDirtyProperty.boolValue = false;
-
-            
 
             if (!IsIncludedInBuild(assetProperty.objectReferenceValue))
             {
                 GUIContent icon = EditorGUIUtility.IconContent("d_console.warnicon@2x", "|This scene is not included in the final build.");
 
-                position.width -= EditorGUIUtility.singleLineHeight;
-
                 Rect rect = new Rect(
-                    position.x + position.width,
+                    position.x + position.width - EditorGUIUtility.singleLineHeight,
                     position.y,
                     EditorGUIUtility.singleLineHeight,
                     EditorGUIUtility.singleLineHeight);
 
                 EditorGUI.LabelField(rect,icon);
+
+                position.width -= widthPadding;
             }
 
             EditorGUI.PropertyField(position, assetProperty, label, false);
