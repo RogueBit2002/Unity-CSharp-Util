@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-namespace LaurensKruis.CSUtil.Collections
+namespace LaurensKruis.CSharpUtil.Collections
 {
 	public class Cycle<T> : ICollection<T>, IReadOnlyCollection<T>
 	{

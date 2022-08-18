@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace LaurensKruis.CSUtil.Editor
+namespace LaurensKruis.CSharpUtil.Editor
 {
 	[CustomPropertyDrawer(typeof(LayerAttribute))]
 	class LayerAttributeEditor : PropertyDrawer

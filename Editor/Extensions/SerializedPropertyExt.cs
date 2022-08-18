@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-namespace LaurensKruis.CSUtil.Editor.Extensions
+namespace LaurensKruis.CSharpUtil.Editor.Extensions
 {
     public static class SerializedPropertyExt
     {

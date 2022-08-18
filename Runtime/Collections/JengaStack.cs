@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LaurensKruis.CSUtil.Collections
+namespace LaurensKruis.CSharpUtil.Collections
 {
 	public class JengaStack<T> : IEnumerable<T>, IReadOnlyCollection<T>
 	{

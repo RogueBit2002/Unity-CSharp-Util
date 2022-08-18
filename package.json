@@ -1,7 +1,7 @@
 {
-	"name": "me.laurens.csutil",
+	"name": "me.laurens.csharputil",
 	"version": "1.0.0",
-	"displayName": "CS Utility",
+	"displayName": "CSharp Utility",
 	"description": "Package containing C# utility code",
 	"author": {
 	  "name": "Laurens Kruis",

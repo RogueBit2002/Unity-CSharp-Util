@@ -1,10 +1,12 @@
 {
-    "name": "LaurensKruis.CSUtil.Editor",
-    "rootNamespace": "LaurensKruis.CSUtil.Editor",
+    "name": "LaurensKruis.CSharpUtil.Editor",
+    "rootNamespace": "LaurensKruis.CSharpUtil.Editor",
     "references": [
         "GUID:1dfe0aaa7217b0842a63f89cd15515f9"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

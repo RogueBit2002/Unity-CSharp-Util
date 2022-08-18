@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LaurensKruis.CSUtil.Extensions
+namespace LaurensKruis.CSharpUtil.Extensions
 {
     public static class ConfigurableJointExt
 	{

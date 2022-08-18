@@ -1,6 +1,6 @@
 {
-    "name": "LaurensKruis.CSUtil",
-    "rootNamespace": "LaurensKruis.CSUtil",
+    "name": "LaurensKruis.CSharpUtil",
+    "rootNamespace": "LaurensKruis.CSharpUtil",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

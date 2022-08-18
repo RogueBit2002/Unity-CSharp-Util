@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace LaurensKruis.CSUtil.Collections
+namespace LaurensKruis.CSharpUtil.Collections
 {
     public class Flow<T> : IEnumerable<T>
     {

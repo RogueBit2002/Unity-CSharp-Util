@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.LowLevel;
 
-namespace LaurensKruis.CSUtil.Extensions
+namespace LaurensKruis.CSharpUtil.Extensions
 {
     public static class PlayerLoopSystemExt
     {
