@@ -36,15 +36,6 @@ namespace LaurensKruis.CSharpUtil
         private string path;
 
 
-
-        public Scene Value
-        {
-            get
-            {
-                return SceneManager.GetSceneByPath(path);
-            }
-        }
-
         public string Path
         {
             get
