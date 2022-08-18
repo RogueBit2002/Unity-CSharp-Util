@@ -11,9 +11,14 @@ using UnityEditor.SceneManagement;
 
 namespace LaurensKruis.CSharpUtil
 {
-    [System.Serializable]
+    [Serializable]
     public class SceneReference : ISerializationCallbackReceiver
     {
+        /*
+         * We have two truths here: "asset", and "path"
+         * While in the editor, we assume "asset" to always be true, since this is what we use in the editor
+         * While in a build, we assume "path" to be true, since "asset" isn't compiled
+         */
 
 #if UNITY_EDITOR
         [SerializeField]
@@ -93,7 +98,8 @@ namespace LaurensKruis.CSharpUtil
 
         public void OnBeforeSerialize()
         {
-            path = Path; //Trick to call getter and validate return value
+            string r = AssetDatabase.GetAssetPath(asset);
+            path = string.IsNullOrEmpty(r) ? null : r;
         }
 
         public void OnAfterDeserialize()
@@ -108,7 +114,8 @@ namespace LaurensKruis.CSharpUtil
         {
             EditorApplication.update -= UpdateAsset;
 
-            asset = AssetDatabase.LoadAssetAtPath<SceneAsset>(path);
+            string r = AssetDatabase.GetAssetPath(asset);
+            path = string.IsNullOrEmpty(r) ? null : r;
         }
 #endif
     }
