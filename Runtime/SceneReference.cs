@@ -69,6 +69,9 @@ namespace LaurensKruis.CSharpUtil
             }
         }
 
+        public int BuildIndex => SceneUtility.GetBuildIndexByScenePath(Path);
+
+        public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
 
         public SceneReference()
         {
