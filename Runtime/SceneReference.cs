@@ -92,8 +92,10 @@ namespace LaurensKruis.CSharpUtil
 
         public void OnBeforeSerialize()
         {
+#if UNITY_EDITOR
             string r = AssetDatabase.GetAssetPath(asset);
             path = string.IsNullOrEmpty(r) ? null : r;
+#endif
         }
 
         public void OnAfterDeserialize()
