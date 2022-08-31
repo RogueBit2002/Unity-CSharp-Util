@@ -19,7 +19,7 @@ namespace LaurensKruis.CSharpUtil.Editor.Extensions
 			}
 		}
 
-		public static IEnumerable<SerializedProperty> GetDirectChildren(this SerializedProperty property)
+		public static IEnumerable<SerializedProperty> GetDirectChildren(this SerializedProperty property, bool onlyShowVisible = true)
         {
 			List<SerializedProperty> children = new List<SerializedProperty>();
 			if (!property.hasChildren)
@@ -28,14 +28,16 @@ namespace LaurensKruis.CSharpUtil.Editor.Extensions
 			string root = property.propertyPath;
 			SerializedProperty iterator = property.Copy();
 
-			iterator.NextVisible(true);
+			Func<bool, bool> next = onlyShowVisible ? iterator.NextVisible : iterator.Next;
+
+			next(true);
 			do
 			{
 				if (!iterator.propertyPath.StartsWith(root))
 					break;
 
 				children.Add(iterator.Copy());
-			} while (iterator.NextVisible(false));
+			} while (next(false));
 
 			return children;
         }

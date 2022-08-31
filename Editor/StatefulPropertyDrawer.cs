@@ -41,20 +41,29 @@ namespace LaurensKruis.CSharpUtil.Editor
         //TODO: Add manual garbage collection
         private static Dictionary<Identifier, Entry> states = new Dictionary<Identifier, Entry>();
 
-
-        protected T EnsureState(SerializedProperty property)
+        /// <summary>
+        /// Ensures the existance of a state for <paramref name="property"/>
+        /// </summary>
+        /// <param name="property">The <cref name="SerializedProperty">S</cref></param>
+        /// <param name="state"></param>
+        /// <returns>True if it created a state</returns>
+        protected bool EnsureState(SerializedProperty property, out T state)
         {
             Identifier id = new Identifier(property);
 
             if(!states.ContainsKey(id))
             {
-                T state = new T();
+                state = new T();
                 state.Setup(property);
 
                 states.Add(id, new Entry(state));
+                return true;
+                
             }
 
-            return states[id].state;
+            state = states[id].state;
+
+            return false;
         }
 
         protected void SetState(SerializedProperty property, T state)
