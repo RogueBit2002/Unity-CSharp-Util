@@ -27,7 +27,11 @@ namespace LaurensKruis.CSharpUtil.Editor
             EditorGUI.PropertyField(position, valueProperty, cachedLabel, true);
             EditorGUI.EndDisabledGroup();
 
+            int indentLevel = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = 0;
             enabledProperty.boolValue = EditorGUI.Toggle(togglePosition, enabledProperty.boolValue);
+
+            EditorGUI.indentLevel = indentLevel;
             
         }
 
