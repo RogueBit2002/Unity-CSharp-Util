@@ -22,67 +22,18 @@ namespace LaurensKruis.CSharpUtil.Editor
                 EditorGUI.GetPropertyHeight(enabledProperty));
 
             position.width -= propertyPadding;
-            /*Rect childrenPosition = new Rect(
-                position.x,
-                position.y + EditorGUIUtility.singleLineHeight,
-                position.width,
-                position.height - EditorGUIUtility.singleLineHeight);*/
 
             EditorGUI.BeginDisabledGroup(!enabledProperty.boolValue);
             EditorGUI.PropertyField(position, valueProperty, cachedLabel, true);
-            //DrawValueChildren(childrenPosition, valueProperty);
             EditorGUI.EndDisabledGroup();
 
-            EditorGUI.PropertyField(togglePosition, enabledProperty, GUIContent.none);
+            enabledProperty.boolValue = EditorGUI.Toggle(togglePosition, enabledProperty.boolValue);
             
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return //property.FindPropertyRelative("value").isExpanded ?
-                EditorGUI.GetPropertyHeight(property.FindPropertyRelative("value"));// - EditorGUIUtility.singleLineHeight : EditorGUIUtility.singleLineHeight;
+            return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("value"));// - EditorGUIUtility.singleLineHeight : EditorGUIUtility.singleLineHeight;
         }
-
-        /*
-        private void DrawValueChildren(Rect position, SerializedProperty valueProperty)
-        {
-            EditorGUI.indentLevel++;
-            float y = 0;
-            foreach (SerializedProperty prop in GetChildProperties(valueProperty))
-            {
-                
-                float height = EditorGUI.GetPropertyHeight(prop);
-                Rect pos = EditorGUI.IndentedRect(new Rect(position.x, position.y + y, position.width, height));
-                
-                EditorGUI.PropertyField(new Rect(position.x, position.y + y, position.width, height), prop, true);
-                
-                y += height + 2;
-            }
-            EditorGUI.indentLevel--;
-        }
-
-        private IEnumerable<SerializedProperty> GetChildProperties(SerializedProperty property)
-        {
-            List<SerializedProperty> children = new List<SerializedProperty>();
-
-            property = property.Copy();
-
-            if (!property.hasVisibleChildren || !property.isExpanded)
-                return children;
-
-            string root = property.propertyPath;
-
-            property.NextVisible(true);
-
-            do
-            {
-                if (!property.propertyPath.StartsWith(root))
-                    break;
-
-                children.Add(property.Copy());
-            } while (property.NextVisible(false));
-
-            return children;
-        }*/
     }
 }
