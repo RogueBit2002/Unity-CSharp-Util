@@ -16,12 +16,15 @@ namespace LaurensKruis.CSharpUtil.Editor.Collections
         private readonly float emptyHeight = EditorGUIUtility.singleLineHeight;
         public const float divider = 0.3f;
 
-        
+        private float GetSafePropertyHeight(SerializedProperty property) => GetSafePropertyHeight(property, EditorGUIUtility.singleLineHeight);
+        private float GetSafePropertyHeight(SerializedProperty property, float fallback) => property == null ? fallback : EditorGUI.GetPropertyHeight(property);
+
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-                
+            
             DrawHeader(position, label);
-
+            //ReorderableList
             position.y += headerHeight;
             position.height -= headerHeight;
 
@@ -43,16 +46,20 @@ namespace LaurensKruis.CSharpUtil.Editor.Collections
             return height;
         }
 
-
         private float CalculateEntryHeight(SerializedProperty property)
         {
+            SerializedProperty keyProperty = property.FindPropertyRelative("key");
+            SerializedProperty valueProperty = property.FindPropertyRelative("value");
+
+            float keyHeight = GetSafePropertyHeight(keyProperty);
+            float valueHeight = GetSafePropertyHeight(valueProperty);
+
             float v = Mathf.Max(
                 EditorGUIUtility.singleLineHeight,
                 Mathf.Max(
-                    EditorGUI.GetPropertyHeight(
-                        property.FindPropertyRelative("key")),
-                    EditorGUI.GetPropertyHeight(
-                        property.FindPropertyRelative("value"))));
+                    keyHeight,
+                    valueHeight)
+                );
 
             return v;
         }
@@ -77,7 +84,6 @@ namespace LaurensKruis.CSharpUtil.Editor.Collections
                 EditorGUI.LabelField(rect, label);
             }
 
-
             DrawBackground(rect);
             DrawLabel(rect);
         }
@@ -95,12 +101,13 @@ namespace LaurensKruis.CSharpUtil.Editor.Collections
 
                 if (i == arrayProperty.arraySize - 1)
                     rect.height -= 0.5f;
+
                 DrawElement(rect, property, divider);
                 rect.y += height;
             }
         }
 
-
+        
         private void DrawElement(Rect rect, SerializedProperty property, float divider)
         {
             float padding = 4f;
@@ -110,19 +117,29 @@ namespace LaurensKruis.CSharpUtil.Editor.Collections
             SerializedProperty value = property.FindPropertyRelative("value");
 
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUI.PropertyField(
-                new Rect(
-                    rect.x, 
-                    rect.y, 
-                    rect.width * divider - padding/2f - error, 
-                    rect.height), key, GUIContent.none);
+
+            if(key != null)
+                EditorGUI.PropertyField(
+                    new Rect(
+                        rect.x, 
+                        rect.y, 
+                        rect.width * divider - padding/2f - error, 
+                        GetSafePropertyHeight(key)), key, GUIContent.none);
+
             EditorGUI.EndDisabledGroup();
-            EditorGUI.PropertyField(
-                new Rect(
-                    rect.x + rect.width*divider + padding / 2f, 
-                    rect.y, 
-                    rect.width - rect.width*divider - padding / 2f - error, 
-                    rect.height), value, GUIContent.none, true);
+
+            if(value != null)
+            {
+                float additionalWidthOffset = value.hasVisibleChildren ? 6 : 0;
+                GUIContent label = value.hasVisibleChildren ? new GUIContent("Value") : GUIContent.none;
+                EditorGUI.PropertyField(
+                   new Rect(
+                       rect.x + rect.width * divider + padding / 2f + additionalWidthOffset,
+                       rect.y,
+                       rect.width - rect.width * divider - padding / 2f - error - additionalWidthOffset,
+                       GetSafePropertyHeight(value)), value, label, true);
+            }
+               
         }
     }
 }
