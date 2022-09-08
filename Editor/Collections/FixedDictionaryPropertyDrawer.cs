@@ -22,24 +22,25 @@ namespace LaurensKruis.CSharpUtil.Editor.Collections
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            
-            DrawHeader(position, label);
-            //ReorderableList
+            DrawHeader(position, property, label);
+
             position.y += headerHeight;
             position.height -= headerHeight;
 
-            DrawContent(position, property.FindPropertyRelative("items"));
+            
+            DrawContent(position, property);
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             SerializedProperty arrayProperty = property.FindPropertyRelative("items");
 
-            if (arrayProperty.arraySize == 0)
+            if (arrayProperty.arraySize == 0 || !property.isExpanded)
                 return headerHeight + emptyHeight;
 
             float height = headerHeight;
 
+            
             for (int i = 0; i < arrayProperty.arraySize; i++)
                 height += CalculateEntryHeight(arrayProperty.GetArrayElementAtIndex(i));
 
@@ -65,7 +66,7 @@ namespace LaurensKruis.CSharpUtil.Editor.Collections
         }
 
         
-        private void DrawHeader(Rect rect, GUIContent label)
+        private void DrawHeader(Rect rect, SerializedProperty property ,GUIContent label)
         {
             rect.height = headerHeight;
             void DrawBackground(Rect rect)
@@ -76,33 +77,42 @@ namespace LaurensKruis.CSharpUtil.Editor.Collections
 
             void DrawLabel(Rect rect)
             {
-                rect.xMin += 6f;
-                rect.xMax -= 6f;
+                rect.x += 14;
+                rect.width -= 10;
                 rect.height -= 2f;
                 rect.y += 1f;
 
-                EditorGUI.LabelField(rect, label);
+                property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, label, true);
             }
 
             DrawBackground(rect);
             DrawLabel(rect);
         }
-        private void DrawContent(Rect rect, SerializedProperty arrayProperty)
+        private void DrawContent(Rect rect, SerializedProperty property)
         {
+            SerializedProperty arrayProperty = property.FindPropertyRelative("items");
             if (Event.current.type == EventType.Repaint)
                 boxBackground.Draw(rect, isHover: false, isActive: false, on: false, hasKeyboardFocus: false);
 
+            if (!property.isExpanded)
+            {
+                rect.x += 4;
+                rect.width -= 4;
+                EditorGUI.LabelField(rect, new GUIContent($"{arrayProperty.arraySize} Item(s)"));
+                return;
+            }
+
             for (int i = 0; i < arrayProperty.arraySize; i++)
             {
-                SerializedProperty property = arrayProperty.GetArrayElementAtIndex(i);
-                float height = CalculateEntryHeight(property);
+                SerializedProperty prop = arrayProperty.GetArrayElementAtIndex(i);
+                float height = CalculateEntryHeight(prop);
 
                 rect.height = height;
 
                 if (i == arrayProperty.arraySize - 1)
                     rect.height -= 0.5f;
 
-                DrawElement(rect, property, divider);
+                DrawElement(rect, prop, divider);
                 rect.y += height;
             }
         }
